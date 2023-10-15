@@ -28,7 +28,7 @@ function Recipe() {
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0 }}
         >
             <div>
                 <h2>{details.title}</h2>
@@ -83,8 +83,15 @@ const DetailWrapper = styled(motion.div)`
         background: linear-gradient(35deg, #494949, #313131);
         color: white;
     }
+    img {
+        border-radius: 2rem;
+    }
     h2 {
         margin-bottom: 2rem;
+    }
+    h3 {
+        font-size: 1.2rem;
+        margin: 0rem 0rem;
     }
     li {
         font-size: 1.2rem;
@@ -100,7 +107,7 @@ const Button = styled.button`
     color: #313131;
     background: white;
     border: 2px solid black;
-    margin-right: 2rem;
+    margin: 0rem 2rem 1rem 0rem;
     font-weight: 600;
 `;
 

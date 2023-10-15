@@ -10,25 +10,39 @@ function Cuisine() {
     let params = useParams();
 
     const getCuisine = async (name) => {
-        const data = await fetch(
-            `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${name}`
-        );
-        // name je dinamicki, hvaca ono sto je u url-u
-        const recipes = await data.json();
-        setCuisine(recipes.results);
+        let cuisine_name = JSON.stringify(params.type);
+        const check = localStorage.getItem(`cuisine_${cuisine_name}`);
+
+        // if ((cname = 'Thai')) console.log(1);
+
+        if (check) {
+            setCuisine(JSON.parse(check));
+        } else {
+            const data = await fetch(
+                `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${name}`
+            );
+            // name je dinamicki, hvaca ono sto je u url-u
+            const recipes = await data.json();
+            setCuisine(recipes.results);
+
+            localStorage.setItem(
+                `cuisine_${cuisine_name}`,
+                JSON.stringify(recipes.results)
+            );
+        }
     };
 
     // use effect radi samo na mount, ako stisnem link to nije mount
     useEffect(() => {
         getCuisine(params.type);
-        console.log(params); // {name: "italian"}
+        // console.log(JSON.stringify(params)); // {name: "italian"}
     }, [params.type]);
     return (
         <Grid
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0 }}
         >
             {cuisine.map((item) => {
                 return (
